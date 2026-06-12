@@ -12,9 +12,9 @@ export function Hero() {
           </span>
 
           <h1 className="mt-6 text-balance font-serif text-4xl font-semibold leading-[1.12] tracking-tight md:text-5xl lg:text-6xl">
-            자료를 <span className="text-accent">읽는</span> 것에서
+            자료를 <span className="text-red-600">읽는</span> 것에서
             <br />
-            자료로 <span className="underline decoration-accent decoration-4 underline-offset-[6px]">시험</span>을 보는 것으로
+            자료로 <span className="underline decoration-red-600 decoration-4 underline-offset-[6px]">시험</span>을 보는 것으로
           </h1>
 
           <p className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
