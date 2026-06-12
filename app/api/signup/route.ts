@@ -24,7 +24,9 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const webhook = process.env.GOOGLE_SHEETS_WEBHOOK_URL
+    const webhook =
+      process.env.GOOGLE_SHEETS_WEBHOOK_URL ??
+      'https://script.google.com/macros/s/AKfycby4ELonLvKFL6RP1ZHDNfBBOyeLrmT-6CKLSJHFaJYrqWjonhO9XfLd2xlqxJSF8roIIw/exec'
 
     if (!webhook) {
       // 웹훅이 아직 연결되지 않은 경우에도 폼이 동작하도록 로그만 남깁니다.
