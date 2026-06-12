@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
     const webhook =
       process.env.GOOGLE_SHEETS_WEBHOOK_URL ??
-      'https://script.google.com/macros/s/AKfycby4ELonLvKFL6RP1ZHDNfBBOyeLrmT-6CKLSJHFaJYrqWjonhO9XfLd2xlqxJSF8roIIw/exec'
+      'https://script.google.com/macros/s/AKfycbzMsq0pnzq6dtP9eKI8w66u03fPMnrqYL8r3zFkTp6yteAHclVKSEcI22kJnSfrtLIRIA/exec'
 
     if (!webhook) {
       // 웹훅이 아직 연결되지 않은 경우에도 폼이 동작하도록 로그만 남깁니다.
@@ -54,8 +54,31 @@ export async function POST(req: NextRequest) {
       }),
     })
 
+    // 진단용: Apps Script가 실제로 무엇을 반환하는지 확인합니다.
+    // (로그인 HTML이 오면 권한 문제, 빈 값/에러 JSON이면 파싱 문제)
+    const responseText = await res.text()
+    console.log('[signup] webhook status:', res.status)
+    console.log('[signup] webhook body:', responseText.slice(0, 500))
+
     if (!res.ok) {
-      console.log('[v0] 스프레드시트 전송 실패:', res.status)
+      return NextResponse.json(
+        { ok: false, error: '신청 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.' },
+        { status: 502 },
+      )
+    }
+
+    // Apps Script가 JSON({ok:true})을 반환하면 그 값으로 성공 여부를 확정합니다.
+    let scriptOk = true
+    try {
+      const parsed = JSON.parse(responseText)
+      if (parsed && typeof parsed.ok === 'boolean') scriptOk = parsed.ok
+    } catch {
+      // JSON이 아니면(로그인 페이지 등) 본문에 'google' 로그인 흔적이 있는지로 판단
+      if (/<html|sign in|login/i.test(responseText)) scriptOk = false
+    }
+
+    if (!scriptOk) {
+      console.log('[signup] Apps Script가 성공을 확인하지 않음')
       return NextResponse.json(
         { ok: false, error: '신청 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.' },
         { status: 502 },
