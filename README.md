@@ -24,6 +24,22 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+## Recent security and quality updates
+
+- Removed the hardcoded Google Apps Script signup webhook URL.
+- `/api/signup` now requires `GOOGLE_SHEETS_WEBHOOK_URL` and returns `503` when it is not configured.
+- Removed raw personal information and webhook response-body logging from signup handling.
+- Added a required privacy collection/use consent checkbox to the signup form.
+- Restored the TypeScript production-build gate by removing `ignoreBuildErrors`.
+- Added Next ESLint configuration and dependencies so `pnpm lint` runs as a real quality gate.
+
+Validation run:
+
+- `corepack pnpm lint`
+- `corepack pnpm exec tsc --noEmit`
+- `corepack pnpm build`
+- Local `/api/signup` checks for missing webhook config, missing name, and invalid phone number.
+
 ## Learn More
 
 To learn more, take a look at the following resources:

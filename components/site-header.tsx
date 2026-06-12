@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 const nav = [
   { label: '기능', href: '#features' },
@@ -45,9 +46,14 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Button asChild size="sm" className="rounded-full">
-          <a href="#signup">무료 문제집 신청</a>
-        </Button>
+        <a
+          href="#signup"
+          className={cn(
+            buttonVariants({ size: 'sm', className: 'rounded-full' }),
+          )}
+        >
+          무료 문제집 신청
+        </a>
       </div>
     </header>
   )

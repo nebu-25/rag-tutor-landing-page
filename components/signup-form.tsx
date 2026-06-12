@@ -11,6 +11,7 @@ export function SignupForm() {
     'idle',
   )
   const [message, setMessage] = useState('')
+  const [privacyConsent, setPrivacyConsent] = useState(false)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -20,6 +21,12 @@ export function SignupForm() {
       name: String(data.get('name') ?? ''),
       phone: String(data.get('phone') ?? ''),
       school: String(data.get('school') ?? ''),
+    }
+
+    if (data.get('privacyConsent') !== 'on') {
+      setStatus('error')
+      setMessage('개인정보 수집 및 이용에 동의해 주세요.')
+      return
     }
 
     setStatus('loading')
@@ -36,6 +43,7 @@ export function SignupForm() {
       }
       setStatus('success')
       form.reset()
+      setPrivacyConsent(false)
     } catch (err) {
       setStatus('error')
       setMessage((err as Error).message)
@@ -142,10 +150,31 @@ export function SignupForm() {
                 />
               </div>
 
+              <div className="flex items-start gap-3 rounded-lg border border-border bg-background/70 p-4">
+                <input
+                  id="privacyConsent"
+                  name="privacyConsent"
+                  type="checkbox"
+                  required
+                  checked={privacyConsent}
+                  onChange={(event) =>
+                    setPrivacyConsent(event.currentTarget.checked)
+                  }
+                  className="mt-1 size-4 shrink-0 accent-accent"
+                />
+                <Label
+                  htmlFor="privacyConsent"
+                  className="cursor-pointer text-sm font-normal leading-relaxed text-muted-foreground"
+                >
+                  문제집 발송 및 베타 안내를 위해 이름, 전화번호, 학교/전공
+                  정보를 수집하고 이용하는 데 동의합니다.
+                </Label>
+              </div>
+
               <Button
                 type="submit"
                 size="lg"
-                disabled={status === 'loading'}
+                disabled={status === 'loading' || !privacyConsent}
                 className="mt-1 w-full rounded-full text-base"
               >
                 {status === 'loading' ? '신청 중...' : '무료로 신청하기'}
@@ -158,7 +187,6 @@ export function SignupForm() {
               )}
 
               <p className="text-center text-xs leading-relaxed text-muted-foreground">
-                신청 시 이벤트 안내를 위한 연락에 동의하는 것으로 간주됩니다.
                 수집된 정보는 문제집 발송 및 베타 안내 목적에만 사용됩니다.
               </p>
             </form>

@@ -1,4 +1,5 @@
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 export function Hero() {
   return (
@@ -24,17 +25,30 @@ export function Hero() {
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button asChild size="lg" className="rounded-full px-7 text-base">
-              <a href="#signup">무료 문제집 받기</a>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="rounded-full border-foreground/20 bg-transparent px-7 text-base"
+            <a
+              href="#signup"
+              className={cn(
+                buttonVariants({
+                  size: 'lg',
+                  className: 'rounded-full px-7 text-base',
+                }),
+              )}
             >
-              <a href="#how">작동 방식 보기</a>
-            </Button>
+              무료 문제집 받기
+            </a>
+            <a
+              href="#how"
+              className={cn(
+                buttonVariants({
+                  size: 'lg',
+                  variant: 'outline',
+                  className:
+                    'rounded-full border-foreground/20 bg-transparent px-7 text-base',
+                }),
+              )}
+            >
+              작동 방식 보기
+            </a>
           </div>
 
           <p className="mt-5 text-sm text-muted-foreground">
