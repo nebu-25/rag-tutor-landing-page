@@ -28,7 +28,7 @@ export function Compare() {
           </p>
         </div>
 
-        <div className="mx-auto mt-12 max-w-2xl overflow-hidden rounded-xl border border-primary-foreground/15">
+        <div className="mx-auto mt-12 hidden max-w-2xl overflow-hidden rounded-xl border border-primary-foreground/15 md:block">
           <div className="grid grid-cols-[1.5fr_1fr_1fr] bg-primary-foreground/5 text-sm font-medium">
             <div className="p-4" />
             <div className="border-l border-primary-foreground/10 p-4 text-center text-primary-foreground/70">
@@ -57,6 +57,42 @@ export function Compare() {
                 ) : (
                   <Minus className="size-4 text-primary-foreground/25" />
                 )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10 grid gap-3 md:hidden">
+          {rows.map((r) => (
+            <div
+              key={r.label}
+              className="rounded-xl border border-primary-foreground/15 bg-primary-foreground/5 p-4"
+            >
+              <p className="font-medium">{r.label}</p>
+              <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
+                <div className="rounded-lg border border-primary-foreground/10 p-3 text-primary-foreground/70">
+                  <p className="text-xs">자료 읽기 도구</p>
+                  <div className="mt-2 flex items-center gap-2">
+                    {r.them ? (
+                      <>
+                        <Check className="size-4 text-primary-foreground/50" />
+                        <span>지원</span>
+                      </>
+                    ) : (
+                      <>
+                        <Minus className="size-4 text-primary-foreground/30" />
+                        <span>미지원</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div className="rounded-lg border border-accent/25 bg-accent/10 p-3">
+                  <p className="text-xs text-accent">RAG Tutor</p>
+                  <div className="mt-2 flex items-center gap-2 font-medium text-accent">
+                    <Check className="size-4" strokeWidth={2.5} />
+                    <span>지원</span>
+                  </div>
+                </div>
               </div>
             </div>
           ))}

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { CheckCircle2, Gift } from 'lucide-react'
+import { CheckCircle2, Gift, ShieldCheck } from 'lucide-react'
 
 export function SignupForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>(
@@ -171,6 +171,19 @@ export function SignupForm() {
                 </Label>
               </div>
 
+              <div className="rounded-lg border border-accent/25 bg-accent/10 p-4">
+                <div className="flex items-center gap-2 text-sm font-medium text-accent-foreground">
+                  <ShieldCheck className="size-4 text-accent" />
+                  개인정보 안내
+                </div>
+                <ul className="mt-3 space-y-2 text-xs leading-relaxed text-muted-foreground">
+                  <li>수집 목적: 문제집 발송, 베타 초대, 신청자 안내</li>
+                  <li>보관 기간: 발송 및 안내 완료 후 최대 6개월</li>
+                  <li>제3자 제공 없이 내부 운영 목적으로만 사용</li>
+                  <li>삭제 요청 시 확인 후 지체 없이 처리</li>
+                </ul>
+              </div>
+
               <Button
                 type="submit"
                 size="lg"
@@ -187,7 +200,7 @@ export function SignupForm() {
               )}
 
               <p className="text-center text-xs leading-relaxed text-muted-foreground">
-                수집된 정보는 문제집 발송 및 베타 안내 목적에만 사용됩니다.
+                신청 철회 또는 개인정보 삭제 요청은 안내 문자에 회신해 주세요.
               </p>
             </form>
           )}

@@ -49,10 +49,13 @@ export function SiteHeader() {
         <a
           href="#signup"
           className={cn(
-            buttonVariants({ size: 'sm', className: 'rounded-full' }),
+            buttonVariants({
+              size: 'sm',
+              className: 'rounded-full px-3 sm:px-4',
+            }),
           )}
         >
-          무료 문제집 신청
+          베타 신청
         </a>
       </div>
     </header>
